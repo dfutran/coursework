@@ -1,0 +1,47 @@
+---
+title: "W3HW5"
+author: "David Futran"
+date: "June 30, 2017"
+output: html_document
+---
+
+
+```{r}
+
+library(dplyr)
+library(plyr)
+library(tidyr)
+library(ggplot2)
+
+
+setwd("~/GitHub/coursework/week3")
+data <- read.csv("Lee(2007)_RDReplication.csv")
+data <- data.frame(data)
+
+df <- data %>% select(DWinNxt, DemWin, DifDPct, ForgnPct, GovWkPct, BlackPct, UrbanPct, DWinPrv, YearElec, CDNumAtL)
+
+ols = glm(DWinNxt ~ DemWin, data = df)
+ols
+
+```
+
+
+```{r}
+ols = glm(DWinNxt ~ DemWin + ForgnPct + UrbanPct, data = df)
+summary(ols)
+
+```
+
+```{r}
+install.packages("rdd")
+library("rdd")
+reg = glm(DWinNxt ~ DemWin, cutpoint=.1, data = df)
+summary(ols)
+
+```
+
+```{r}
+ols = glm(DWinNxt ~ DemWin + DWinPrv + YearElec + CDNumAtL, data = df)
+summary(ols)
+
+```
